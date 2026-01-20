@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>eShop Revival</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body onload="init()">
+
+    <div id="top-screen">
+        <div class="banner-area">
+            <h1 id="shop-title">eShop</h1>
+            <p id="status-text">Select a title to begin download</p>
+        </div>
+        <audio id="bgm" src="eshop_bgm.mp3" autoplay loop></audio>
+    </div>
+
+    <div id="bottom-screen">
+        <div id="game-grid">
+            <p style="text-align:center; padding-top:50px;">Loading Database...</p>
+        </div>
+    </div>
+
+    <script>
+        function init() {
+            // Force scroll to top to align screens
+            window.scrollTo(0, 0);
+            
+            fetch('games.json')
+                .then(res => res.json())
+                .then(data => {
+                    const grid = document.getElementById('game-grid');
+                    grid.innerHTML = ''; // Clear loading text
+                    
+                    data.forEach(game => {
+                        const item = document.createElement('div');
+                        item.className = 'game-item';
+                        item.onclick = () => { window.location.href = game.url; };
+                        item.innerHTML = `
+                            <img src="${game.icon}" class="icon">
+                            <span class="title">${game.name}</span>
+                        `;
+                        grid.appendChild(item);
+                    });
+                });
+        }
+    </script>
+</body>
+</html>
