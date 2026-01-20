@@ -45,21 +45,42 @@
                 });
         }
     </async function init() {
-    // 1. Force screen alignment
-    window.scrollTo(0, 0);
-
-    // 2. Get your "Every Game" list
+    // This tells the 3DS to look for your file named usa_games.json
     const response = await fetch('usa_games.json');
-    const games = await response.json();
+    const allGames = await response.json();
 
-    // 3. Put them on the bottom screen
     const grid = document.getElementById('game-grid');
-    grid.innerHTML = games.map(game => `
-        <div class="game-item" onclick="window.location.href='${game.url}'">
-            <img src="https://images.erista.me/icons/${game.id}.png" class="icon">
-            <span class="title">${game.name}</span>
-        </div>
-    `).join('');
-}>
+    grid.innerHTML = ''; // Clears any "Loading..." text
+
+    allGames.forEach(game => {
+        const item = document.createElement('div');
+        item.className = 'game-item';
+
+        // BRACKET NOTATION: This lets us use keys with spaces and capitals
+        const title = game["Name"];
+        const tid = game["TitleID"];
+        const pcode = game["Product Code"]; 
+
+        // Building the display
+        item.innerHTML = `
+            <img src="https://images.erista.me/icons/${tid}.png" class="icon">
+            <div class="info">
+                <span class="title">${title}</span><br>
+                <small style="color: #666;">${pcode}</small>
+            </div>
+        `;
+
+        // Setting up the download link
+        item.onclick = () => {
+            // This assumes your CIA files are named exactly like the "Name" field
+            window.location.href = `https://archive.org/download/3ds-cia-collection/${encodeURIComponent(title)}.cia`;
+        };
+
+        grid.appendChild(item);
+    });
+}
+
+// Start the shop
+init();>
 </body>
 </html>
