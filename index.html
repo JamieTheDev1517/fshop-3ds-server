@@ -44,6 +44,22 @@
                     });
                 });
         }
-    </script>
+    </async function init() {
+    // 1. Force screen alignment
+    window.scrollTo(0, 0);
+
+    // 2. Get your "Every Game" list
+    const response = await fetch('usa_games.json');
+    const games = await response.json();
+
+    // 3. Put them on the bottom screen
+    const grid = document.getElementById('game-grid');
+    grid.innerHTML = games.map(game => `
+        <div class="game-item" onclick="window.location.href='${game.url}'">
+            <img src="https://images.erista.me/icons/${game.id}.png" class="icon">
+            <span class="title">${game.name}</span>
+        </div>
+    `).join('');
+}>
 </body>
 </html>
