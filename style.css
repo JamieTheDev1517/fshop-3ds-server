@@ -1,0 +1,55 @@
+/* Core Layout */
+body {
+    margin: 0;
+    padding: 0;
+    background-color: #FF8400; /* Signature Orange */
+    font-family: sans-serif;
+    overflow: hidden; /* Prevent 3DS from scrolling past the two screens */
+}
+
+/* Top Screen (400px wide) */
+#top-screen {
+    width: 400px;
+    height: 240px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    color: white;
+    text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+}
+
+/* Bottom Screen (320px wide) */
+#bottom-screen {
+    width: 320px;
+    height: 240px;
+    background-color: #F0F0F0; /* Light gray UI */
+    margin: 0 auto; /* Centers the 320px screen on the 400px page */
+    overflow-y: scroll; /* Allows you to scroll through games with the stylus */
+}
+
+/* Game Grid Item */
+.game-item {
+    display: flex;
+    align-items: center;
+    padding: 10px;
+    border-bottom: 1px solid #CCC;
+    background: white;
+}
+
+.game-item:active {
+    background: #FFD700; /* Yellow highlight when clicked */
+}
+
+.icon {
+    width: 48px;
+    height: 48px;
+    border-radius: 5px;
+    margin-right: 12px;
+}
+
+.title {
+    font-size: 14px;
+    color: #333;
+    font-weight: bold;
+}
